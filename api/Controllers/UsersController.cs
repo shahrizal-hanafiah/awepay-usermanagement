@@ -45,6 +45,27 @@ namespace API.Controllers
                 throw (ex);
             }
         }
+        
+        // api/users/filterSort
+        [HttpGet("filterSort", Name="GetUserFilteredSorted")]
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers(FilterSortingParams sortingParams)
+        {
+            try
+            {
+                var users =  await _unitOfWork.UserRepository.GetUsersFilteredSortedAsync(sortingParams);
+
+                var result = _mapper.Map<IEnumerable<UserDto>>(users);
+
+                if (users.Count() > 0) return Ok(result);
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
         // api/users/id
         [HttpGet("id/{id}")]
         public async Task<ActionResult<UserDto>> GetUser(int id)
@@ -57,29 +78,11 @@ namespace API.Controllers
 
                 return result;
             }
-            catch(Exception ex)
-            {
-                throw(ex);
-            }
-        }
-        // api/users/filterSort
-        [HttpGet("filterSort", Name="GetUserFilteredSorted")]
-        public async Task<ActionResult<UserDto>> GetUsers(FilterSortingParams sortingParams)
-        {
-            try
-            {
-                var user =  await _unitOfWork.UserRepository.GetUsersFilteredSortedAsync(sortingParams);
-
-                var result = _mapper.Map<UserDto>(user);
-
-                return result;
-            }
             catch (Exception ex)
             {
                 throw (ex);
             }
         }
-
         //api/user/update
         [HttpPut]
         public async Task<ActionResult> UpdateUser([FromBody] UserUpdateDto userUpdateDto)

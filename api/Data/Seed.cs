@@ -14,20 +14,20 @@ namespace API.Data
     {
         public static async Task SeedUser(DataContext context)
         {
-            if (await context.Users.AnyAsync()) return;
+            //if (await context.Users.AnyAsync()) return;
 
-            var userData = await System.IO.File.ReadAllTextAsync("Data/UserSeedData.json");
-            var users = JsonSerializer.Deserialize<List<AppUser>>(userData);
-            foreach (var user in users)
-            {
-                using var hMac = new HMACSHA512();
+            //var userData = await System.IO.File.ReadAllTextAsync("Data/UserSeedData.json");
+            //var users = JsonSerializer.Deserialize<List<AppUser>>(userData);
+            //foreach (var user in users)
+            //{
+            //    using var hMac = new HMACSHA512();
 
-                user.Email = user.Email.ToLower();
-                user.PasswordHash = hMac.ComputeHash(Encoding.UTF8.GetBytes("Pa$$w0rd"));
-                user.PasswordSalt = hMac.Key;
+            //    user.Email = user.Email.ToLower();
+            //    user.PasswordHash = hMac.ComputeHash(Encoding.UTF8.GetBytes("Pa$$w0rd"));
+            //    user.PasswordSalt = hMac.Key;
 
-                context.Users.Add(user);
-            }
+            //    context.Users.Add(user);
+            //}
 
             await context.SaveChangesAsync();
         }

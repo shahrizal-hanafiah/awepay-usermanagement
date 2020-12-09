@@ -44,11 +44,13 @@ namespace API.Data.Repository
         {
             var users =  _context.Users.AsQueryable();
 
-            if (!string.IsNullOrEmpty(filterSortingParams.SearchString)) users = users.Where(x => x.Email.ToLower() == filterSortingParams.SearchString.ToLower() || x.Phone == filterSortingParams.SearchString).AsQueryable();
+            if (!string.IsNullOrEmpty(filterSortingParams.SearchString)) users = users.Where(x => filterSortingParams.SearchString.ToLower().Contains(x.Email.ToLower()) ||  filterSortingParams.SearchString.Contains(x.Phone)).AsQueryable();
 
             if (!string.IsNullOrEmpty(filterSortingParams.SortBy)) users = users.Sort(filterSortingParams.SortBy);
 
-            return await users.ToListAsync();
+            var latestUsers = await users.ToListAsync();
+
+            return latestUsers;
 
         }
 
