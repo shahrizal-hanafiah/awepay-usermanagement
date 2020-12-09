@@ -1,7 +1,15 @@
-﻿################################################################################
+################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
 /api/api/obj
 /api/api/appsettings.json
 *.json
+api/obj/API.csproj.EntityFrameworkCore.targets
+api/obj/API.csproj.nuget.g.props
+api/obj/API.csproj.nuget.g.targets
+api/obj/Debug/netcoreapp3.1/.NETCoreApp,Version=v3.1.AssemblyAttributes.cs
+api/obj/Debug/netcoreapp3.1/API.AssemblyInfo.cs
+api/obj/Debug/netcoreapp3.1/API.csproj.CopyComplete
+api/obj/Debug/netcoreapp3.1/API.csproj.FileListAbsolute.txt
+api/obj/Debug/netcoreapp3.1/staticwebassets/API.StaticWebAssets.xml
