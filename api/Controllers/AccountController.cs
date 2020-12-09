@@ -2,9 +2,11 @@ using API.Data;
 using API.DTOs;
 using API.Entities;
 using API.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -16,17 +18,19 @@ namespace API.Controllers
     {
         private readonly DataContext _context;
         private readonly ITokenService _tokenService;
-        public AccountController(DataContext context,ITokenService tokenService)
+        private readonly IUnitOfWork _unitOfWork;
+
+        public AccountController(DataContext context,ITokenService tokenService, IUnitOfWork unitOfWork)
         {
             _context = context;
             _tokenService = tokenService;
-
+            _unitOfWork = unitOfWork;
         }
         [HttpPost("register")]
         public async Task<ActionResult<int>> Register(RegisterDto registerDto)
         {
 
-            if (await UserExist(registerDto.Email)) return BadRequest("Username is taken");
+            if (await UserExist(registerDto.Email)) return BadRequest("Email already exist");
 
             using var hMac = new HMACSHA512();
 
@@ -41,11 +45,11 @@ namespace API.Controllers
                 PasswordSalt = hMac.Key
             };
 
-            _context.Users.Add(newUser);
+            var user = await _unitOfWork.UserRepository.AddUser(newUser);
 
-            var result = await _context.SaveChangesAsync();
+            if (await _unitOfWork.Complete()) return Ok(user.Id);
 
-            return result;
+            return BadRequest("Something went wrong during adding the user");
         }
 
         [HttpPost("login")]

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using api.Helpers;
 using API.Data;
 using API.DTOs;
 using API.Entities;
@@ -33,7 +34,7 @@ namespace API.Controllers
         {
             try
             {
-                var users = await _unitOfWork.UserRepository.GetStaffAsync();
+                var users = await _unitOfWork.UserRepository.GetUsersAsync();
 
                 var result = _mapper.Map<IEnumerable<UserDto>>(users);
 
@@ -61,13 +62,13 @@ namespace API.Controllers
                 throw(ex);
             }
         }
-        // api/users/username
-        [HttpGet("username/{username}",Name="GetUser")]
-        public async Task<ActionResult<UserDto>> GetUser(string username)
+        // api/users/filterSort
+        [HttpGet("filterSort", Name="GetUserFilteredSorted")]
+        public async Task<ActionResult<UserDto>> GetUsers(FilterSortingParams sortingParams)
         {
             try
             {
-                var user =  await _unitOfWork.UserRepository.GetFirstStaffOrDefaultAsync(username);
+                var user =  await _unitOfWork.UserRepository.GetUsersFilteredSortedAsync(sortingParams);
 
                 var result = _mapper.Map<UserDto>(user);
 
@@ -83,7 +84,7 @@ namespace API.Controllers
         [HttpPut]
         public async Task<ActionResult> UpdateUser([FromBody] UserUpdateDto userUpdateDto)
         {
-            var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
+            var user = await _unitOfWork.UserRepository.GetUserByIdAsync(userUpdateDto.Id);
 
             _mapper.Map(userUpdateDto, user);
 
@@ -94,7 +95,7 @@ namespace API.Controllers
             return BadRequest("Failed to update user");
         }
 
-        //api/user/update
+        //api/user
         [HttpDelete]
         public async Task<ActionResult> DeleteUser(int id)
         {
@@ -102,7 +103,7 @@ namespace API.Controllers
 
             if (user == null) return NotFound();
 
-            _unitOfWork.UserRepository.
+            _unitOfWork.UserRepository.DeleteUser(user);
 
             if (await _unitOfWork.Complete()) return NoContent();
 

@@ -1,4 +1,6 @@
-﻿using API.DTOs;
+﻿using api.Extensions;
+using api.Helpers;
+using API.DTOs;
 using API.Entities;
 using API.Interfaces;
 using AutoMapper;
@@ -21,7 +23,11 @@ namespace API.Data.Repository
             _context = context;
             _mapper = mapper;
         }
-
+        public async Task<AppUser> AddUser(AppUser user)
+        {
+            await _context.AddAsync(user);
+            return user;
+        }
 
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
@@ -34,30 +40,16 @@ namespace API.Data.Repository
             return await _context.Users.FindAsync(id);
         }
 
-        public async Task<AppUser> GetUserByEmailAsync(string searchString,string sortOrder)
+        public async Task<IEnumerable<AppUser>> GetUsersFilteredSortedAsync(FilterSortingParams filterSortingParams)
         {
             var users =  _context.Users.AsQueryable();
 
-            if (searchString != null)
-            {
-                users = users.Where(x => x.Email.ToLower() == searchString.ToLower() || x.Phone == searchString).AsQueryable();
-            }
+            if (!string.IsNullOrEmpty(filterSortingParams.SearchString)) users = users.Where(x => x.Email.ToLower() == filterSortingParams.SearchString.ToLower() || x.Phone == filterSortingParams.SearchString).AsQueryable();
 
-            switch (sortOrder)
-            {
-                case "email_desc":
-                    users = users.OrderByDescending(s => s.Email).ToList();
-                    break;
-                case "FullName":
-                    users = users.OrderBy(s => s.FullName).ToList();
-                    break;
-                case "fullname_desc":
-                    users = users.OrderByDescending(s => s.FullName).ToList();
-                    break;
-                default:
-                    users = users.OrderBy(s => s.Email).ToList();
-                    break;
-            }
+            if (!string.IsNullOrEmpty(filterSortingParams.SortBy)) users = users.Sort(filterSortingParams.SortBy);
+
+            return await users.ToListAsync();
+
         }
 
         public void UpdateUser(AppUser user)
