@@ -7,7 +7,8 @@ namespace api.Helpers
 {
     public class FilterSortingParams
     {
-        public string SearchString { get; set; } = "";
+        public string SearchByPhone { get; set; } = "";
+        public string SearchByEmail { get; set; } = "";
         public string SortBy { get; set; } = "";
     }
 }

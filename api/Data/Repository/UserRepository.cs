@@ -1,10 +1,8 @@
 ﻿using api.Extensions;
 using api.Helpers;
-using API.DTOs;
 using API.Entities;
 using API.Interfaces;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -44,7 +42,9 @@ namespace API.Data.Repository
         {
             var users =  _context.Users.AsQueryable();
 
-            if (!string.IsNullOrEmpty(filterSortingParams.SearchString)) users = users.Where(x => filterSortingParams.SearchString.ToLower().Contains(x.Email.ToLower()) ||  filterSortingParams.SearchString.Contains(x.Phone)).AsQueryable();
+            if (!string.IsNullOrEmpty(filterSortingParams.SearchByEmail)) users = users.Where(x => EF.Functions.Like(x.Email.ToLower(), "%" + filterSortingParams.SearchByEmail.ToLower() + "%"));
+
+            if (!string.IsNullOrEmpty(filterSortingParams.SearchByPhone)) users = users.Where(x => EF.Functions.Like(x.Phone.ToLower(), "%" + filterSortingParams.SearchByPhone.ToLower() + "%"));
 
             if (!string.IsNullOrEmpty(filterSortingParams.SortBy)) users = users.Sort(filterSortingParams.SortBy);
 
