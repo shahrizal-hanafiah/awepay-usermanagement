@@ -18,9 +18,9 @@ The results should be sorted by the given field.
 # Answer:
 
 ## 1. To create user:
-API: {{url}}/account/register
-Method: GET
-Payload: 
+- API: {{url}}/account/register
+- Method: GET
+- Payload: 
 {
     "FullName": "string",
     "Email": "string",
@@ -29,19 +29,19 @@ Payload:
 }
 
 ## 2. Login 
-API: {{url}}/account/login
-Method: POST
-Payload: 
+- API: {{url}}/account/login
+- Method: POST
+- Payload: 
 {
     "Email":"string",
     "Password":"P@$$w0rd"
 }
 
 ## 3. Update user 
-API: {{url}}/users
-Method: PUT
-Header: Key = Authorization,Value = {{token}}
-Payload: 
+- API: {{url}}/users
+- Method: PUT
+- Header: Key = Authorization,Value = {{token}}
+- Payload: 
 {
     "Id":int,
     "FullName":"string",
@@ -51,15 +51,15 @@ Payload:
 }
 
 ## 4. Delete user
-API: {{url}}/users/{{id}}
-Header: Key = Authorization,Value = {{token}}
-Method: Delete
+- API: {{url}}/users/{{id}}
+- Header: Key = Authorization,Value = {{token}}
+- Method: Delete
 
 ## 5. Search all users, filter and sorted
-API: {{url}}/users/filterSort
-Header: Key = Authorization,Value = {{token}}
-Method: GET
-Payload: 
+- API: {{url}}/users/filterSort
+- Header: Key = Authorization,Value = {{token}}
+- Method: GET
+- Payload: 
 {
     "SearchByEmail":"aisyah",
     "SearchByPhone":"",
