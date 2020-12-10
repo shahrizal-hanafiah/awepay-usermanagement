@@ -15,3 +15,17 @@ api/obj/Debug/netcoreapp3.1/API.csproj.FileListAbsolute.txt
 api/obj/Debug/netcoreapp3.1/staticwebassets/API.StaticWebAssets.xml
 .vs/api/DesignTimeBuild/.dtbcache.v2
 .vs/api/config/applicationhost.config
+api/obj/Debug/netcoreapp3.1/api.MvcApplicationPartsAssemblyInfo.cs
+api/obj/Release/netcoreapp3.1/.NETCoreApp,Version=v3.1.AssemblyAttributes.cs
+api/obj/Release/netcoreapp3.1/api.AssemblyInfo.cs
+api/obj/Release/netcoreapp3.1/api.csproj.CopyComplete
+api/obj/Release/netcoreapp3.1/api.csproj.FileListAbsolute.txt
+api/obj/Release/netcoreapp3.1/api.MvcApplicationPartsAssemblyInfo.cs
+api/obj/Release/netcoreapp3.1/PublishOutputs.47b027ba1d.txt
+api/obj/Release/netcoreapp3.1/PubTmp/api.Parameters.xml
+api/obj/Release/netcoreapp3.1/PubTmp/api.SourceManifest.xml
+api/obj/Release/netcoreapp3.1/PubTmp/Out/web.config
+api/obj/Release/netcoreapp3.1/staticwebassets/api.StaticWebAssets.xml
+api/Properties/PublishProfiles/awepayapi - FTP.pubxml
+api/Properties/PublishProfiles/awepayapi - ReadOnly - FTP.pubxml
+api/Properties/PublishProfiles/awepayapi - Web Deploy.pubxml
