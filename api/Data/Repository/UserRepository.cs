@@ -16,7 +16,7 @@ namespace API.Data.Repository
         private readonly DataContext _context;
         private readonly IMapper _mapper;
 
-        public UserRepository(DataContext context,IMapper mapper)
+        public UserRepository(DataContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -40,11 +40,13 @@ namespace API.Data.Repository
 
         public async Task<IEnumerable<AppUser>> GetUsersFilteredSortedAsync(FilterSortingParams filterSortingParams)
         {
-            var users =  _context.Users.AsQueryable();
+            var users = _context.Users.AsQueryable();
 
-            if (!string.IsNullOrEmpty(filterSortingParams.SearchByEmail)) users = users.Where(x => EF.Functions.Like(x.Email.ToLower(), "%" + filterSortingParams.SearchByEmail.ToLower() + "%"));
+            if (!string.IsNullOrEmpty(filterSortingParams.SearchByEmail)) users = users.Where(x => EF.Functions.Like(x.Email.ToLower(),
+                "%" + filterSortingParams.SearchByEmail.ToLower() + "%"));
 
-            if (!string.IsNullOrEmpty(filterSortingParams.SearchByPhone)) users = users.Where(x => EF.Functions.Like(x.Phone.ToLower(), "%" + filterSortingParams.SearchByPhone.ToLower() + "%"));
+            if (!string.IsNullOrEmpty(filterSortingParams.SearchByPhone)) users = users.Where(x => EF.Functions.Like(x.Phone.ToLower(),
+                "%" + filterSortingParams.SearchByPhone.ToLower() + "%"));
 
             if (!string.IsNullOrEmpty(filterSortingParams.SortBy)) users = users.Sort(filterSortingParams.SortBy);
 

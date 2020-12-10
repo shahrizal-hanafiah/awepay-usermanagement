@@ -83,6 +83,7 @@ namespace API.Controllers
                 throw (ex);
             }
         }
+
         //api/user/update
         [HttpPut]
         public async Task<ActionResult> UpdateUser([FromBody] UserUpdateDto userUpdateDto)
@@ -98,8 +99,8 @@ namespace API.Controllers
             return BadRequest("Failed to update user");
         }
 
-        //api/user
-        [HttpDelete]
+        //api/users/{id}
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser(int id)
         {
             var user = await _unitOfWork.UserRepository.GetUserByIdAsync(id);
