@@ -9,9 +9,9 @@ Create a REST endpoint that allows creation of new User and returns the user id 
 ### Phone (optional)
 ### Age (optional)
 
-Create a REST endpoint that allows us to update user information
-Create a REST endpoint that allows us to delete a user
-Create a REST endpoint that allows us to search all users by email and phone and provide sorting order by field
+- Create a REST endpoint that allows us to update user information
+- Create a REST endpoint that allows us to delete a user
+- Create a REST endpoint that allows us to search all users by email and phone and provide sorting order by field
 
 The results should be sorted by the given field.
 
